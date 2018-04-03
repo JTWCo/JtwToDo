@@ -10,7 +10,6 @@ namespace JTWToDo.Data
         [Key]
         public int Id { get; set; }
         public DateTime LastUpdated { get; set; }
-        public int LastUpdatedBy { get; set; }
         public byte[] ConcurrencyVersion { get; set; }
     }
 }

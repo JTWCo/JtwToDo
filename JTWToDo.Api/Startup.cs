@@ -1,6 +1,5 @@
 ﻿using System;
 using JTWToDo.Data;
-using JTWToDo.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,14 +20,14 @@ namespace JTWToDo.Api
         public void ConfigureServices(IServiceCollection services)
         {
             //TODO: use more secure configuration
-            services.AddEntityFrameworkSqlServer().AddDbContext<ToDoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
+            services.AddEntityFrameworkSqlServer().AddDbContext<ToDoDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
             services.AddMvc();
             services.AddScoped(_repoFactory);
         }
 
         private readonly Func<IServiceProvider, ITodoDataContext> _repoFactory = x =>
         {
-            var context = x.GetService<ITodoDataContext>();
+            var context = x.GetService<ToDoDataContext>();
 
             return context;
 
