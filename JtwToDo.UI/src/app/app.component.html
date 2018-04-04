@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" href="#">JTW ToDo</a>
+</nav>
+<div class="container-fluid text-center pb-5">
+  <div style="text-align:center">
+    <app-to-do-list [todos]="todos"></app-to-do-list>
+  </div>
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-bottom">
+    <div class="col-6 footertext" style="text-align: left;">Copyright &copy; {{ copyrightDate | date : "yyyy" }}</div>
+    <div class="col-6 footertext" style="text-align: right;">JTW Consulting, Inc.</div>
+    </nav>
+ </div>
+
