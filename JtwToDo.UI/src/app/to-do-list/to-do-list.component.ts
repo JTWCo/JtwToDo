@@ -19,6 +19,8 @@ export class ToDoListComponent implements OnInit {
 
   @Input() todos: IToDo[] = [];
 
+  @Input() listUpdated = false;
+
   toggleCompleted(): void {
     this.showCompleted = !this.showCompleted;
     this.nothingToShow = !this.showCompleted;

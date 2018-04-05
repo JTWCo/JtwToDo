@@ -13,6 +13,7 @@ namespace JTWToDo.Api.Controllers
         public ToDoController(ITodoDataContext context) : base(context) { }
 
         [Route("GetAll")]
+        [HttpGet]
         public IEnumerable<ToDo> GetAll(int clientId)
         {
             IEnumerable<ToDo> todos = BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).GetAll() as IEnumerable<ToDo>;
@@ -21,6 +22,7 @@ namespace JTWToDo.Api.Controllers
         }
 
         [Route("Get/{id}")]
+        [HttpGet]
         public IEnumerable<ToDo> Get(int id)
         {
             return BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Get(id) as IEnumerable<ToDo>;
@@ -32,17 +34,18 @@ namespace JTWToDo.Api.Controllers
         {
         }
         
-        // PUT: api/ToDo/5
-        [HttpPut("{id}")]
+        [Route("Put/{id}")]
+        [HttpPut]
         public void Put(int id, [FromBody]ToDo entity)
         {
-            BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Update(entity);
+            BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Update((ToDo)entity);
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        [Route("Delete/{id}")]
+        [HttpDelete]
         public void Delete(int id)
         {
+            BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Delete(id);
         }
     }
 }

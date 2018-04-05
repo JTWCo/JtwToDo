@@ -9,7 +9,7 @@
       <div class="col-1" style="text-align: right;">
         <div *ngIf="this.selectToDo">
           <a href="#" (click)="toggleEdited()"><i class="fa fa-edit" style=""></i></a>
-          <a href="#"><i class="fa fa-trash" style=""></i></a>&nbsp;
+          <a href="#" (click)="deleteItem()"><i class="fa fa-trash" style=""></i></a>&nbsp;
         </div>
       </div>
     </div>

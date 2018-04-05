@@ -41,18 +41,18 @@ namespace JTWToDo.Business.Interfaces
             using (DbContext)
             {
 
-                //all of this should be extracted out to the base class and made more generic, but in the interest of time, doing this by brute force here
+                //TODO:all of this should be extracted out to the base class and made more generic, but in the interest of time, doing this by brute force here
                 if (entity.Id == 0)
                 {
-                    DbContext.Add<ToDo>((ToDo) entity);
+                    DbContext.Add<ToDo>((ToDo)entity);
                 }
 
-                ToDo existingToDo = Get(entity.Id).FirstOrDefault() as ToDo;
+                ToDo existingToDo = DbContext.ToDo.FirstOrDefault(todo => todo.Id == entity.Id);
 
                 ToDo updatedToDo = entity as ToDo;
                 if (existingToDo != null)
                 {
-                    if (existingToDo.ConcurrencyVersion == updatedToDo.ConcurrencyVersion)
+                    if (existingToDo.ConcurrencyVersion.SequenceEqual(updatedToDo.ConcurrencyVersion))
                     {
                         existingToDo.DueDate = updatedToDo.DueDate;
                         existingToDo.Completed = updatedToDo.Completed;
@@ -62,9 +62,22 @@ namespace JTWToDo.Business.Interfaces
                         existingToDo.LastUpdated = DateTime.Now;
                     }
                     else
-                    {  throw new DBConcurrencyException("Concurrency Exception");}
+                    { throw new DBConcurrencyException("Concurrency Exception"); }
                 }
-                
+
+                DbContext.SaveChanges();
+            }
+        }
+
+        public override void Delete(int id)
+        {
+            using (DbContext)
+            {
+
+                //TODO: extract out to the base class and made more generic, but in the interest of time, doing this by brute force here
+                ToDo existingToDo = DbContext.ToDo.FirstOrDefault(todo => todo.Id == id);
+
+                DbContext.ToDo.Remove(existingToDo);
                 DbContext.SaveChanges();
             }
         }

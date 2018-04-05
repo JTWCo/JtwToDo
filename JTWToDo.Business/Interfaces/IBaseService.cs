@@ -8,5 +8,6 @@ namespace JTWToDo.Business
         IEnumerable<BaseEntity> GetAll();
         IEnumerable<BaseEntity> Get(int id);
         void Update(BaseEntity entity);
+        void Delete(int id);
     }
 }

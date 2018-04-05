@@ -15,5 +15,6 @@ namespace JTWToDo.Business
         public abstract IEnumerable<BaseEntity> GetAll();
         public abstract IEnumerable<BaseEntity> Get(int id);
         public abstract void Update(BaseEntity entity);
+        public abstract void Delete(int id);
     }
 }

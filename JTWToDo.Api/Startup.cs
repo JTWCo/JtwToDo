@@ -23,6 +23,7 @@ namespace JTWToDo.Api
             services.AddEntityFrameworkSqlServer().AddDbContext<ToDoDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
             services.AddMvc();
             services.AddScoped(_repoFactory);
+            services.AddCors();
         }
 
         private readonly Func<IServiceProvider, ITodoDataContext> _repoFactory = x =>
@@ -39,6 +40,8 @@ namespace JTWToDo.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().WithHeaders("accept", "content-type", "origin", "x-custom-header"));  //should not hard code this, move to config
 
             app.UseMvc(routes =>
             {

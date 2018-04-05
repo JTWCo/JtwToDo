@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import Todo = require("../to-do/to-do");
 import IToDo = Todo.IToDo;
 import Todoservice = require("../to-do/to-do.service");
@@ -17,6 +17,7 @@ export class ToDoComponent implements OnInit {
   editToDo: boolean = false;
   @Input() selectToDo: boolean = false;
   errorMessage: string;
+  @Output() todoListUpdated = false;
   
   @Input() todo: IToDo;
 
@@ -35,12 +36,17 @@ export class ToDoComponent implements OnInit {
 
   markComplete(): void {
     this.todo.completed = !this.todo.completed;
-    this._toDoService.updateToDo(this.todo);
+    this._toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
   }
 
   saveChanges(): void {
-    this._toDoService.updateToDo(this.todo);
+    this._toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
     this.toggleEdited();
+  }
+
+  deleteItem(): void {
+    this._toDoService.deleteToDo(this.todo.id).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
+    this.todoListUpdated = true;
   }
   ngOnChanges(): void {
     this.showToDo = (this.todo.completed && this.showIfCompleted) || !this.todo.completed;
