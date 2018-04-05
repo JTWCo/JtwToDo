@@ -2,7 +2,7 @@
   <div class="card-block" *ngIf="!this.editToDo">
     <div class="row">
       <div class="col-9">
-        <div style="width: 20px; float: left;"><input type="checkbox" class="todocheckbox" [checked]="todo.Completed" /></div>
+        <div style="width: 20px; float: left;"><input type="checkbox" class="todocheckbox" [checked]="todo.completed" (click)="markComplete()"/></div>
         <div style="margin-left: 20px;" style="cursor: pointer;" (click)="toggleSelected()">{{todo.description}}</div>
       </div>
       <div class="col-2" style="cursor: pointer;" (click)="toggleSelected()">{{todo.dueDate | date: "MM/dd/yyyy"}}</div>
@@ -19,7 +19,7 @@
   </div>
   <div class="card-block" *ngIf="this.editToDo">
     <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
-      <div class="col-9"><input type="checkbox" class="todocheckbox" [(ngModel)]="todo.completed"> <input type="text" [(ngModel)]="todo.description"/></div>
+      <div class="col-9"><input type="checkbox" class="todocheckbox" [(ngModel)]="todo.completed" (click)="markComplete()"> <input type="text" [(ngModel)]="todo.description"/></div>
       <div class="col-2">
         <input type="date" [ngModel]="todo.dueDate | date:'yyyy-MM-dd'" (ngModelChange)="todo.dueDate = $event">
       </div>

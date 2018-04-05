@@ -16,7 +16,7 @@
         <app-to-do class="col-12" *ngFor="let todo of todos" [todo]="todo" [showIfCompleted]="this.showCompleted"></app-to-do>
       </div>
     </div>
-    <div class="panel-body" *ngIf="!todos || !todos.length">
+    <div class="panel-body" *ngIf="!todos || !todos.length || this.nothingToShow">
       <div class="col-12" style="text-align: left;">
           <h3>You can relax - there's nothing to do right now!</h3>
         </div>

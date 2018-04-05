@@ -1,6 +1,7 @@
 ﻿using JTWToDo.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using JTWToDo.Business;
 
 namespace JTWToDo.Api.Controllers
@@ -14,7 +15,9 @@ namespace JTWToDo.Api.Controllers
         [Route("GetAll")]
         public IEnumerable<ToDo> GetAll(int clientId)
         {
-            return BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).GetAll() as IEnumerable<ToDo>;
+            IEnumerable<ToDo> todos = BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).GetAll() as IEnumerable<ToDo>;
+
+            return todos.OrderByDescending(x => x.DueDate);
         }
 
         [Route("Get/{id}")]
@@ -31,10 +34,11 @@ namespace JTWToDo.Api.Controllers
         
         // PUT: api/ToDo/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]ToDo entity)
         {
+            BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Update(entity);
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)

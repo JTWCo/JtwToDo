@@ -15,18 +15,29 @@ export class ToDoListComponent implements OnInit {
   showCompleted: boolean = false;
   completedButtonText: string = "Show Completed";
   errorMessage: string;
+  nothingToShow: boolean = true;
 
   @Input() todos: IToDo[] = [];
 
   toggleCompleted(): void {
     this.showCompleted = !this.showCompleted;
+    this.nothingToShow = !this.showCompleted;
   }
 
   constructor(private _toDoService: ToDoService) { }
 
   ngOnInit(): void {
 
-    this._toDoService.getToDos().subscribe(tds=> this.todos = tds, error => this.errorMessage = <any>error);
+    this._toDoService.getToDos().subscribe(tds => {
+      this.todos = tds;
+
+      
+      for (let td of this.todos) {
+        if (!td.completed) {
+          this.nothingToShow = false;
+        }
+      }
+    }, error => this.errorMessage = <any>error);
   }
 
 }
