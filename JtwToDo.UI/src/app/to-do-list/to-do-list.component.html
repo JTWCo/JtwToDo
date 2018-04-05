@@ -6,7 +6,7 @@
       <div class="col-2"><h6>By:</h6></div>
       <div class="col-1"></div>
     </div>
-    
+    {{this.errorMessage}}
     <div class="panel-body" *ngIf="todos && todos.length">
       <div>
         <button class="btn btn-primary" (click)="toggleCompleted()">{{showCompleted ? "Hide Completed" : "Show Completed"}}</button>

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import Todo = require("../to-do/to-do");
+import IToDo = Todo.IToDo;
 
 @Component({
   selector: 'app-to-do',
@@ -11,9 +13,8 @@ export class ToDoComponent implements OnInit {
   showToDo: boolean = true;
   editToDo: boolean = false;
   @Input() selectToDo: boolean = false;
-  showEditOptions : boolean = false;
-
-  @Input() todo: any;
+  
+  @Input() todo: IToDo;
 
   constructor() { }
 
@@ -32,7 +33,7 @@ export class ToDoComponent implements OnInit {
     this.toggleEdited();
   }
   ngOnChanges(): void {
-    this.showToDo = (this.todo.Completed && this.showIfCompleted) || !this.todo.Completed;
+    this.showToDo = (this.todo.completed && this.showIfCompleted) || !this.todo.completed;
   }
 
 }
