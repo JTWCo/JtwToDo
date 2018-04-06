@@ -21,19 +21,39 @@ export class ToDoListComponent implements OnInit {
 
   @Input() listUpdated = false;
 
+  private isNotCompleted(todo: IToDo) {
+    return !todo.completed;
+  }
+
   toggleCompleted(): void {
     this.showCompleted = !this.showCompleted;
-    this.nothingToShow = !this.showCompleted;
+
+    var notCompletedToDosCount = this.todos.find(this.isNotCompleted);
+    var allToDosCount = this.todos.length;
+
+    if (this.todos.length == 0) {
+      this.nothingToShow = true;
+    } else {
+      if (!this.showCompleted) {
+        if (notCompletedToDosCount == undefined) {
+          this.nothingToShow = true;
+        }
+      }
+    }
   }
 
   constructor(private _toDoService: ToDoService) { }
 
   ngOnInit(): void {
 
+    this.populateList();
+  }
+
+  private populateList(): void {
     this._toDoService.getToDos().subscribe(tds => {
       this.todos = tds;
 
-      
+
       for (let td of this.todos) {
         if (!td.completed) {
           this.nothingToShow = false;
@@ -42,4 +62,7 @@ export class ToDoListComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
   }
 
+  updateList(): void {
+    this.populateList();
+  }
 }

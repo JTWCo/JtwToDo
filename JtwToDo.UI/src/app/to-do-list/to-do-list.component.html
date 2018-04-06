@@ -13,7 +13,7 @@
         <a href="#"><i class="fa fa-plus" style="float: right; padding-top: 22px;"></i></a> <!-- using padding is a vertical alignment hack, should really use a more universal vertical alignment approach -->
       </div>
       <div class="row">
-        <app-to-do class="col-12" *ngFor="let todo of todos" [todo]="todo" [showIfCompleted]="this.showCompleted"></app-to-do>
+        <app-to-do class="col-12" *ngFor="let todo of todos" [todo]="todo" [showIfCompleted]="this.showCompleted" (onTodoListUpdated)="updateList($event)"></app-to-do>
       </div>
     </div>
     <div class="panel-body" *ngIf="!todos || !todos.length || this.nothingToShow">

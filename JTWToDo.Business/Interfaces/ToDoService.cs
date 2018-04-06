@@ -41,7 +41,9 @@ namespace JTWToDo.Business.Interfaces
             using (DbContext)
             {
 
-                //TODO:all of this should be extracted out to the base class and made more generic, but in the interest of time, doing this by brute force here
+                //TODO:all of this should be abstracted out to the base class and made more generic 
+                //(likely using reflection to iterate through the entity properties)
+                //, but in the interest of time, doing this by brute force here
                 if (entity.Id == 0)
                 {
                     DbContext.Add<ToDo>((ToDo)entity);

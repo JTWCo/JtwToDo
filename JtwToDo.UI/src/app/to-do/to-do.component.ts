@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import Todo = require("../to-do/to-do");
 import IToDo = Todo.IToDo;
 import Todoservice = require("../to-do/to-do.service");
@@ -17,11 +17,13 @@ export class ToDoComponent implements OnInit {
   editToDo: boolean = false;
   @Input() selectToDo: boolean = false;
   errorMessage: string;
-  @Output() todoListUpdated = false;
+  @Output() onTodoListUpdated: EventEmitter<any>;
   
   @Input() todo: IToDo;
 
-  constructor(private _toDoService: ToDoService) { }
+  constructor(private _toDoService: ToDoService) {
+    this.onTodoListUpdated = new EventEmitter();
+  }
 
   ngOnInit() {
   }
@@ -45,8 +47,11 @@ export class ToDoComponent implements OnInit {
   }
 
   deleteItem(): void {
-    this._toDoService.deleteToDo(this.todo.id).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
-    this.todoListUpdated = true;
+    //this should really confirm that the user wants to delete before deleting
+    this._toDoService.deleteToDo(this.todo.id).subscribe(x => {
+      this.errorMessage = "success";
+      this.onTodoListUpdated.emit();
+    }, error => this.errorMessage = <any>error.errorMessage);
   }
   ngOnChanges(): void {
     this.showToDo = (this.todo.completed && this.showIfCompleted) || !this.todo.completed;
