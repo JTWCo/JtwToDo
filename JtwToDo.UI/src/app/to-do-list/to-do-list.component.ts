@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import Todoservice = require("../to-do/to-do.service");
-import ToDoService = Todoservice.ToDoService;
-import Todo = require("../to-do/to-do");
-import IToDo = Todo.IToDo;
+import {ToDoService } from '../to-do/to-do.service';
+import { IToDo } from "../to-do/to-do";
 
 
 @Component({
