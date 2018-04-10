@@ -1,1 +1,35 @@
 .footertext { font-size: .75em; color:#fff; margin:0; padding:0;}
+.footerlink a {
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+.footerlink a:hover {
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.fade.in {
+  opacity: 1;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-backdrop .fade .in {
+  opacity: 0.5 !important;
+}
+
+
+.modal-backdrop.fade {
+  opacity: 0.5 !important;
+}
+
+.modal-body {
+  max-height: calc(100vh - 175px);
+  overflow-y: auto;
+}
