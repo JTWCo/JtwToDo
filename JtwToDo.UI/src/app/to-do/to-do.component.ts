@@ -12,7 +12,7 @@ import {ToDoService } from '../to-do/to-do.service';
 export class ToDoComponent implements OnInit {
   @Input() showIfCompleted: boolean;
   showToDo: boolean = true;
-  editToDo: boolean = false;
+  @Input() editToDo: boolean = false;
   @Input() selectToDo: boolean = false;
   errorMessage: string;
   @Output() onTodoListUpdated: EventEmitter<any>;

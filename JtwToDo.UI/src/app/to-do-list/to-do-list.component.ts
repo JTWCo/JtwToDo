@@ -14,6 +14,10 @@ export class ToDoListComponent implements OnInit {
   completedButtonText: string = "Show Completed";
   errorMessage: string;
   nothingToShow: boolean = true;
+  toDoToAdd: IToDo = <IToDo> {
+    id: 0
+  };
+  addToDo: boolean = false;
 
   @Input() todos: IToDo[] = [];
 
@@ -38,6 +42,10 @@ export class ToDoListComponent implements OnInit {
         }
       }
     }
+  }
+
+  toggleAdd(): void {
+    this.addToDo = !this.addToDo;
   }
 
   constructor(private _toDoService: ToDoService) { }

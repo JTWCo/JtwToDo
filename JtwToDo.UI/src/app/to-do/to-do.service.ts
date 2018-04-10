@@ -4,14 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import {HttpClient} from "@angular/common/http";
 import { HttpHeaders } from '@angular/common/http';
 
-//import 'rxjs/add/map';
-//import 'rxjs/add/operator/share';
-
-
 @Injectable()
 export class ToDoService {
 
-  private _todoUrl = 'http://jtwtodoapi.azurewebsites.net/jtwtodoapi/ToDo';
+  private _todoUrl = 'http://jtwtodoapi.azurewebsites.net/jtwtodoapi/ToDo'; //TODO:should not be hardcoded
   //private _todoUrl = 'http://localhost:57056/jtwtodoapi/ToDo';
 
   constructor(private _http: HttpClient) { }
