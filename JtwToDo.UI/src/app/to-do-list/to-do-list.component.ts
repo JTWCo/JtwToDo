@@ -71,5 +71,7 @@ export class ToDoListComponent implements OnInit {
 
   updateList(): void {
     this.populateList();
+    this.toDoToAdd = <IToDo>{ id: 0 }
+    this.addToDo = false;
   }
 }

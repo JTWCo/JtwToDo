@@ -36,22 +36,28 @@ export class ToDoComponent implements OnInit {
 
   markComplete(): void {
     this.todo.completed = !this.todo.completed;
-    this.toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
+    this.toDoService.updateToDo(this.todo).subscribe(x => {
+      this.errorMessage = "success";
+      this.onTodoListUpdated.emit();
+    }, error => this.errorMessage = <any>error.errorMessage);
   }
 
   saveChanges(): void {
-    this.toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
+    this.toDoService.updateToDo(this.todo).subscribe(x => {
+      this.errorMessage = "success";
+      this.onTodoListUpdated.emit();
+    }, error => this.errorMessage = <any>error.errorMessage);
     this.toggleEdited();
-    //TODO: needs error handling
+    //TODO: needs better error handling
   }
 
   deleteItem(): void {
-    //this should really confirm that the user wants to delete before performing delete operation
+    //TODO: this should really confirm that the user wants to delete before performing delete operation
     this.toDoService.deleteToDo(this.todo.id).subscribe(x => {
       this.errorMessage = "success";
       this.onTodoListUpdated.emit();
     }, error => this.errorMessage = <any>error.errorMessage);
-    //TODO: needs error handling
+    //TODO: needs better error handling
   }
 
   ngOnChanges(): void {
