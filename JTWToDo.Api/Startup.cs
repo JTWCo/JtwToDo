@@ -41,6 +41,7 @@ namespace JTWToDo.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            //enable CORS for local front-end application, CORS for deployed app is handled in Azure
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().WithHeaders("accept", "content-type", "origin", "x-custom-header"));  //should not hard code this, move to config
 
             app.UseMvc(routes =>
