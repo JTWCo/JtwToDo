@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {ToDoService } from '../to-do/to-do.service';
 import { IToDo } from "../to-do/to-do";
-
+import {SortPipe} from '../pipes/sort.pipe';
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.scss'],
-  providers:[ToDoService]
+  providers:[ToDoService, SortPipe]
 })
 export class ToDoListComponent implements OnInit {
   showCompleted: boolean = false;
@@ -48,7 +48,7 @@ export class ToDoListComponent implements OnInit {
     this.addToDo = !this.addToDo;
   }
 
-  constructor(private _toDoService: ToDoService) { }
+  constructor(private _toDoService: ToDoService, private sortPipe: SortPipe) { }
 
   ngOnInit(): void {
 
@@ -59,6 +59,7 @@ export class ToDoListComponent implements OnInit {
     this._toDoService.getToDos().subscribe(tds => {
       this.todos = tds;
 
+      this.sortPipe.transform(this.todos, 'dueDate', 'end');
 
       for (let td of this.todos) {
         if (!td.completed) {

@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { ToDoComponent } from './to-do/to-do.component';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
     ToDoComponent,
-    ToDoListComponent
+    ToDoListComponent,
+    SortPipe
   ],
   imports: [
     BrowserModule,

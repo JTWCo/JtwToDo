@@ -4,12 +4,13 @@
     <div class="row">
       <div class="col-9"><h6>Things to Do:</h6></div>
       <div class="col-2"><h6>By:</h6></div>
-      <div class="col-1"></div>
+      <div class="col-1"><a (click)="toggleAdd()" href="#"><i class="fa fa-plus" style="float: right; padding-top: 5px;"></i></a> <!-- using padding is a vertical alignment hack, should really use a more universal vertical alignment approach -->
+      </div>
     </div>
     <div class="panel-body" *ngIf="todos && todos.length">
       <div>
         <button class="btn btn-primary" (click)="toggleCompleted()">{{showCompleted ? "Hide Completed" : "Show Completed"}}</button>
-        <a (click)="toggleAdd()" href="#"><i class="fa fa-plus" style="float: right; padding-top: 22px;"></i></a> <!-- using padding is a vertical alignment hack, should really use a more universal vertical alignment approach -->
+        <!--<a (click)="toggleAdd()" href="#"><i class="fa fa-plus" style="float: right; padding-top: 22px;"></i></a>--> <!-- using padding is a vertical alignment hack, should really use a more universal vertical alignment approach -->
       </div>
       <app-to-do [todo] ="toDoToAdd" [editToDo]="true" *ngIf="addToDo"></app-to-do>
       <div class="row">

@@ -18,7 +18,7 @@ namespace JTWToDo.Api.Controllers
         {
             IEnumerable<ToDo> todos = BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).GetAll() as IEnumerable<ToDo>;
 
-            return todos.OrderByDescending(x => x.DueDate);
+            return todos;
         }
 
         [Route("Get/{id}")]
@@ -28,14 +28,17 @@ namespace JTWToDo.Api.Controllers
             return BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Get(id) as IEnumerable<ToDo>;
         }
 
-        // POST: api/ToDo
+        [Route("Post")]
         [HttpPost]
-        public void Post([FromBody]string value)
+        //TODO: This should really return some sort of response object which includes information about errors which occur
+        public void Post([FromBody]ToDo entity)
         {
+            BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Update((ToDo)entity);
         }
-        
+
         [Route("Put/{id}")]
         [HttpPut]
+        //TODO: This should really return some sort of response object which includes information about errors which occur
         public void Put(int id, [FromBody]ToDo entity)
         {
             BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Update((ToDo)entity);
@@ -43,6 +46,7 @@ namespace JTWToDo.Api.Controllers
 
         [Route("Delete/{id}")]
         [HttpDelete]
+        //TODO: This should really return some sort of response object which includes information about errors which occur
         public void Delete(int id)
         {
             BusinessFactory.ToDoFactory.CreateService<IToDoService>(DataContext).Delete(id);

@@ -1,5 +1,4 @@
 ﻿using System;
-using JTWToDo.Business.Interfaces;
 using JTWToDo.Data;
 
 namespace JTWToDo.Business
@@ -15,10 +14,8 @@ namespace JTWToDo.Business
                     return new ToDoService(context);
                 }
 
-                throw new ArgumentException(string.Format("Invalid Service Type: {0}", typeof(T).GetType().Name), string.Empty);
+                throw new ArgumentException(string.Format("Invalid Service Type: {0}", typeof(T).Name), string.Empty);
             }
-
-
         }
     }
 }

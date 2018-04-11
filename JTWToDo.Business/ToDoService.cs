@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using JTWToDo.Data;
-using Microsoft.EntityFrameworkCore;
 
-namespace JTWToDo.Business.Interfaces
+namespace JTWToDo.Business
 {
     public class ToDoService : BaseService
     {
@@ -36,29 +34,33 @@ namespace JTWToDo.Business.Interfaces
             return todos;
         }
 
+        //ToDo:  This should really return some sort of result object that includes information about any errors that occur and/or the updated entity
         public override void Update(BaseEntity entity)
         {
             using (DbContext)
             {
+                var updatedToDo = entity as ToDo;
 
                 //TODO:all of this should be abstracted out to the base class and made more generic 
                 //(likely using reflection to iterate through the entity properties)
                 //, but in the interest of time, doing this by brute force here
                 if (entity.Id == 0)
                 {
-                    DbContext.Add<ToDo>((ToDo)entity);
+                    if (updatedToDo != null)
+                    {
+                        updatedToDo.DateCreated = DateTime.Now;
+                        DbContext.Add(updatedToDo);
+                    }
                 }
 
-                ToDo existingToDo = DbContext.ToDo.FirstOrDefault(todo => todo.Id == entity.Id);
+                var existingToDo = DbContext.ToDo.FirstOrDefault(todo => todo.Id == entity.Id);
 
-                ToDo updatedToDo = entity as ToDo;
                 if (existingToDo != null)
                 {
-                    if (existingToDo.ConcurrencyVersion.SequenceEqual(updatedToDo.ConcurrencyVersion))
+                    if (updatedToDo != null && existingToDo.ConcurrencyVersion.SequenceEqual(updatedToDo.ConcurrencyVersion))
                     {
                         existingToDo.DueDate = updatedToDo.DueDate;
                         existingToDo.Completed = updatedToDo.Completed;
-                        existingToDo.DateCreated = updatedToDo.DateCreated;
                         existingToDo.Description = updatedToDo.Description;
                         existingToDo.Notes = updatedToDo.Notes;
                         existingToDo.LastUpdated = DateTime.Now;
@@ -66,21 +68,24 @@ namespace JTWToDo.Business.Interfaces
                     else
                     { throw new DBConcurrencyException("Concurrency Exception"); }
                 }
-
                 DbContext.SaveChanges();
             }
         }
 
+        //ToDo:  This should really return some sort of result object that includes information about any errors that occur
         public override void Delete(int id)
         {
             using (DbContext)
             {
 
-                //TODO: extract out to the base class and made more generic, but in the interest of time, doing this by brute force here
+                //TODO: extract out to the base class and make more generic
                 ToDo existingToDo = DbContext.ToDo.FirstOrDefault(todo => todo.Id == id);
 
-                DbContext.ToDo.Remove(existingToDo);
-                DbContext.SaveChanges();
+                if (existingToDo != null)
+                {
+                    DbContext.ToDo.Remove(existingToDo);
+                    DbContext.SaveChanges();
+                }
             }
         }
     }

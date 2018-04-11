@@ -19,7 +19,7 @@ export class ToDoComponent implements OnInit {
   
   @Input() todo: IToDo;
 
-  constructor(private _toDoService: ToDoService) {
+  constructor(private toDoService: ToDoService) {
     this.onTodoListUpdated = new EventEmitter();
   }
 
@@ -36,23 +36,25 @@ export class ToDoComponent implements OnInit {
 
   markComplete(): void {
     this.todo.completed = !this.todo.completed;
-    this._toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
+    this.toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
   }
 
   saveChanges(): void {
-    this._toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
+    this.toDoService.updateToDo(this.todo).subscribe(x => { this.errorMessage = "success" }, error => this.errorMessage = <any>error.errorMessage);
     this.toggleEdited();
+    //TODO: needs error handling
   }
 
   deleteItem(): void {
-    //this should really confirm that the user wants to delete before deleting
-    this._toDoService.deleteToDo(this.todo.id).subscribe(x => {
+    //this should really confirm that the user wants to delete before performing delete operation
+    this.toDoService.deleteToDo(this.todo.id).subscribe(x => {
       this.errorMessage = "success";
       this.onTodoListUpdated.emit();
     }, error => this.errorMessage = <any>error.errorMessage);
+    //TODO: needs error handling
   }
+
   ngOnChanges(): void {
     this.showToDo = (this.todo.completed && this.showIfCompleted) || !this.todo.completed;
   }
-
 }
